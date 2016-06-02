@@ -30,6 +30,14 @@ const routes: Routes = [
     })
   },
   {
+    path: '/simpleform',
+    loadComponent: () => new Promise(resolve => {
+      (require as any).ensure([], require => {
+        resolve(require('./forms/page').SimpleFormPage);
+      });
+    })
+  },
+  {
     path: '/*',
     loadComponent: () => new Promise(resolve => {
       (require as any).ensure([], require => {

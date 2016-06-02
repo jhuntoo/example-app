@@ -1,10 +1,11 @@
 import { BookActions } from './book';
+import { FormActions} from '../forms/lib/actions';
 
 
 export {
-  BookActions
+  BookActions, FormActions
 };
 
 export default [
-  BookActions
+  BookActions, FormActions
 ];
