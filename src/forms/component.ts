@@ -4,7 +4,10 @@ import {
 import {
   Component, OnInit, OnChanges, ChangeDetectionStrategy
 } from '@angular/core';
+import {Store} from '@ngrx/store';
+import {Observable} from 'rxjs/Observable'
 import {BindToStore} from './lib/directives';
+import {getFormsState} from './lib/reducers';
 
 @Component({
   name: 'simple',
@@ -19,8 +22,10 @@ import {BindToStore} from './lib/directives';
         <p>Confirm password <input type="password" ngControl="passwordConfirmation"></p>
       </div>
     </form>
-    <h3>Form value:</h3>
+    <h3>Angular Form value:</h3>
     <pre>{{value}}</pre>
+    <h3>ngrx/forms value:</h3>
+    <pre>{{formsState | async}}</pre>
     `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -28,7 +33,9 @@ export class SimpleFormComponent {
 
   loginForm: ControlGroup;
 
-  constructor(private fb: FormBuilder) {
+  formsState: Observable<string>;
+
+  constructor(private fb: FormBuilder, private store: Store) {
     this.loginForm = fb.group({
       userName: ["", Validators.required],
       passwordRetry: fb.group({
@@ -36,6 +43,7 @@ export class SimpleFormComponent {
         passwordConfirmation: ["", Validators.required]
       })
     });
+    this.formsState = this.store.let(getFormsState()).map(s => JSON.stringify(s, null, 2));
   };
 
   get value(): string {

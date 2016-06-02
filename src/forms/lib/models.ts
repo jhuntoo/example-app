@@ -1,5 +1,6 @@
 export class FieldModel<T> {
   value: T = {};
+  status: "";
   touched: boolean = false;
 }
 
@@ -24,10 +25,18 @@ export class FieldTouchedEvent {
   value: any;
 }
 
-export class FieldChangedEvent {
+export class FieldValueChangedEvent {
 
   constructor(public form: string,
               public field: string,
               public value: any) {
+  }
+}
+
+export class FieldStatusChangedEvent {
+
+  constructor(public form: string,
+              public field: string,
+              public status: any) {
   }
 }
