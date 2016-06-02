@@ -1,16 +1,24 @@
 export class FieldModel<T> {
   value: T = {};
+  initialValue: T = {};
   status: "";
   touched: boolean = false;
+
+  public static loadFrom(value: any) {
+    let field = new FieldModel();
+    field.value = value;
+    field.initialValue = value;
+    return field;
+  }
 }
 
 
 export class BaseFormModel {
-  asyncValidating: boolean = false;
-  error: boolean = false;
-  initialized: boolean = false;
-  submitting: boolean = false;
-  submitFailed: boolean = false;
+  _asyncValidating: boolean = false;
+  _valid: boolean = false;
+  _initialized: boolean = false;
+  _submitting: boolean = false;
+  _submitFailed: boolean = false;
 }
 
 export class LoginFormModel {
@@ -38,5 +46,23 @@ export class FieldStatusChangedEvent {
   constructor(public form: string,
               public field: string,
               public status: any) {
+  }
+}
+
+export class FormStatusChangedEvent {
+
+  constructor(public form: string,
+              public status: any) {
+  }
+}
+
+export class FormLoadEvent {
+
+  constructor(public form: string,
+              public fields: {[field:string]: any}) {
+  }
+}
+export class FormResetEvent {
+  constructor(public form: string) {
   }
 }
